@@ -30,7 +30,7 @@ func FindNames(text []rune, d *dict.Dictionary, opts ...util.Opt) Output {
 		}
 	}
 
-	heuristic.TagTokens(tokens, d, text, m)
+	heuristic.TagTokens(tokens, d, m)
 	if m.Bayes {
 		nlp.TagTokens(tokens, d, m)
 	}
@@ -40,5 +40,16 @@ func FindNames(text []rune, d *dict.Dictionary, opts ...util.Opt) Output {
 
 func collectOutput(ts []token.Token, text []rune,
 	m *util.Model) Output {
-	return Output{}
+	var names []Name
+	for i := range tokens {
+		u := &tokens[i]
+		if u.Kind == token.NotName {
+			continue
+		}
+		s := &tokens[i+u.SpeciesIndexOffset]
+		name := TokensToName(u, s, t)
+		names = append(names, name)
+	}
+	output := NewOutput(names, tokens, gnf)
+	return output
 }

@@ -121,5 +121,23 @@ func checkGreyGeneraSp(g *token.Token, s *token.Token,
 
 func checkInfraspecies(ts []token.Token, d *dict.Dictionary,
 	m *util.Model) bool {
+	i := ts[0].Indices.Species + 2
+	if len(ts) > i {
+		ts[i].SetSpeciesDict(&ts[i], d)
+		if _, ok := d.Ranks[ts[i-1].Cleaned]; ok && checkAsSpecies(&ts[i], d) {
+			ts[0].Indices.Rank = i - 1
+			ts[0].Indices.Infraspecies = i
+			return true
+		}
+	}
+
+	i--
+	if len(ts) > i {
+		ts[i].SetSpeciesDict(&ts[i], d)
+		if checkAsSpecies(&ts[i], d) {
+			ts[0].Indices.Infraspecies = i
+			return true
+		}
+	}
 	return false
 }
