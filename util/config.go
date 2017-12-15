@@ -75,9 +75,11 @@ func WithLanguage(l lang.Language) func(*Config) error {
 
 // WithBayes is an option that forces running bayes name-finding even when
 // the language is not supported by training sets.
-func WithBayes(g *Config) error {
-	g.Bayes = true
-	return nil
+func WithBayes(b bool) func(*Config) error {
+	return func(conf *Config) error {
+		conf.Bayes = b
+		return nil
+	}
 }
 
 // WithBayesThreshold is an option for name finding, that sets new threshold

@@ -25,7 +25,7 @@ var _ = Describe("Config", func() {
 		})
 
 		It("sets bayes", func() {
-			conf := util.NewConfig(util.WithBayes)
+			conf := util.NewConfig(util.WithBayes(true))
 			Expect(conf.Bayes).To(BeTrue())
 		})
 
@@ -50,8 +50,8 @@ var _ = Describe("Config", func() {
 		})
 
 		It("sets several options", func() {
-			conf := util.NewConfig(util.WithResolverWorkers(10), util.WithBayes,
-				util.WithLanguage(lang.English))
+			conf := util.NewConfig(util.WithResolverWorkers(10),
+				util.WithBayes(true), util.WithLanguage(lang.English))
 			Expect(conf.Workers).To(Equal(10))
 			Expect(conf.Language).To(Equal(lang.English))
 			Expect(conf.Bayes).To(BeTrue())
