@@ -7,7 +7,7 @@ import (
 )
 
 func TagTokens(ts []token.Token, d *dict.Dictionary, text []rune,
-	conf *util.Config) {
+	m *util.Model) {
 	l := len(ts)
 
 	for i := range ts {
@@ -22,10 +22,10 @@ func TagTokens(ts []token.Token, d *dict.Dictionary, text []rune,
 		if l < upperIndex {
 			upperIndex = l
 		}
-		exploreNameCandidate(ts[i:upperIndex], d, text, conf)
+		exploreNameCandidate(ts[i:upperIndex], d, text, m)
 	}
 }
 
 func exploreNameCandidate(ts []token.Token, d *dict.Dictionary, text []rune,
-	conf *util.Config) {
+	m *util.Model) {
 }

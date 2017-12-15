@@ -6,6 +6,6 @@ import (
 	"github.com/gnames/gnfinder/util"
 )
 
-func TagTokens(ts []token.Token, d *dict.Dictionary, conf *util.Config) {
+func TagTokens(ts []token.Token, d *dict.Dictionary, m *util.Model) {
 
 }

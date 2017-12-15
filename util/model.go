@@ -7,8 +7,8 @@ import (
 	"github.com/gnames/gnfinder/lang"
 )
 
-// Config keeps configuration variables
-type Config struct {
+// Model keeps configuration variables
+type Model struct {
 	// Language of the text
 	Language lang.Language
 	// Bayes flag forces to run Bayes name-finding on unknown languages
@@ -35,10 +35,10 @@ type Resolver struct {
 	Workers   int
 }
 
-// NewConfig creates Config object with default data, or with data coming
+// NewModel creates Model object with default data, or with data coming
 // from opts.
-func NewConfig(opts ...Opt) *Config {
-	conf := &Config{
+func NewModel(opts ...Opt) *Model {
+	m := &Model{
 		Language: lang.NotSet,
 		TextOdds: bayes.LabelFreq{
 			bayes.Label("Name"):    0.0,
@@ -55,29 +55,29 @@ func NewConfig(opts ...Opt) *Config {
 		},
 	}
 	for _, o := range opts {
-		err := o(conf)
+		err := o(m)
 		Check(err)
 	}
 
-	return conf
+	return m
 }
 
 // Opt are options for gnfinder
-type Opt func(g *Config) error
+type Opt func(g *Model) error
 
 // WithLanguage option forces a specific language to be associated with a text.
-func WithLanguage(l lang.Language) func(*Config) error {
-	return func(conf *Config) error {
-		conf.Language = l
+func WithLanguage(l lang.Language) func(*Model) error {
+	return func(m *Model) error {
+		m.Language = l
 		return nil
 	}
 }
 
 // WithBayes is an option that forces running bayes name-finding even when
 // the language is not supported by training sets.
-func WithBayes(b bool) func(*Config) error {
-	return func(conf *Config) error {
-		conf.Bayes = b
+func WithBayes(b bool) func(*Model) error {
+	return func(m *Model) error {
+		m.Bayes = b
 		return nil
 	}
 }
@@ -85,35 +85,35 @@ func WithBayes(b bool) func(*Config) error {
 // WithBayesThreshold is an option for name finding, that sets new threshold
 // for results from the Bayes name-finding. All the name candidates that have a
 // higher threshold will appear in the resulting names output.
-func WithBayesThreshold(odds float64) func(*Config) error {
-	return func(conf *Config) error {
-		conf.BayesOddsThreshold = odds
+func WithBayesThreshold(odds float64) func(*Model) error {
+	return func(m *Model) error {
+		m.BayesOddsThreshold = odds
 		return nil
 	}
 }
 
 // WithResolverURL option sets a new url for name resolution service.
-func WithResolverURL(url string) func(*Config) error {
-	return func(conf *Config) error {
-		conf.URL = url
+func WithResolverURL(url string) func(*Model) error {
+	return func(m *Model) error {
+		m.URL = url
 		return nil
 	}
 }
 
 // WithResolverBatch option sets the batch size of name-strings to send to the
 // resolution service.
-func WithResolverBatch(n int) func(*Config) error {
-	return func(conf *Config) error {
-		conf.BatchSize = n
+func WithResolverBatch(n int) func(*Model) error {
+	return func(m *Model) error {
+		m.BatchSize = n
 		return nil
 	}
 }
 
 // WithResolverWorkers option sets the number of workers to process
 // name-resolution jobs.
-func WithResolverWorkers(n int) func(*Config) error {
-	return func(conf *Config) error {
-		conf.Workers = n
+func WithResolverWorkers(n int) func(*Model) error {
+	return func(m *Model) error {
+		m.Workers = n
 		return nil
 	}
 }

@@ -22,23 +22,23 @@ func FindNamesJSON(data []byte, dict *dict.Dictionary,
 func FindNames(text []rune, d *dict.Dictionary, opts ...util.Opt) Output {
 	tokens := token.Tokenize(text)
 
-	conf := util.NewConfig(opts...)
-	if conf.Language == lang.NotSet {
-		conf.Language = lang.DetectLanguage(text)
-		if conf.Language != lang.UnknownLanguage {
-			conf.Bayes = true
+	m := util.NewModel(opts...)
+	if m.Language == lang.NotSet {
+		m.Language = lang.DetectLanguage(text)
+		if m.Language != lang.UnknownLanguage {
+			m.Bayes = true
 		}
 	}
 
-	heuristic.TagTokens(tokens, d, text, conf)
-	if conf.Bayes {
-		nlp.TagTokens(tokens, d, conf)
+	heuristic.TagTokens(tokens, d, text, m)
+	if m.Bayes {
+		nlp.TagTokens(tokens, d, m)
 	}
 
-	return collectOutput(tokens, text, conf)
+	return collectOutput(tokens, text, m)
 }
 
 func collectOutput(ts []token.Token, text []rune,
-	conf *util.Config) Output {
+	m *util.Model) Output {
 	return Output{}
 }

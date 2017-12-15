@@ -9,7 +9,7 @@ import (
 )
 
 var _ = Describe("Model", func() {
-	Describe("NewModel()", func() {
+	Describe("NewGnfinder()", func() {
 		It("returns new Model object", func() {
 			m := util.NewModel()
 			Expect(m.Language).To(Equal(lang.NotSet))
