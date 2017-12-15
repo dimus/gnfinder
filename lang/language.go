@@ -1,4 +1,4 @@
-package gnfinder
+package lang
 
 import (
 	"github.com/abadojack/whatlanggo"

@@ -4,13 +4,13 @@ import (
 	"runtime"
 
 	"github.com/gnames/bayes"
-	"github.com/gnames/gnf/util"
+	"github.com/gnames/gnfinder/lang"
 )
 
 // Config keeps configuration variables
 type Config struct {
 	// Language of the text
-	Language
+	Language lang.Language
 	// Bayes flag forces to run Bayes name-finding on unknown languages
 	Bayes bool
 	// BayesOddsThreshold sets the limit of posterior odds. Everything bigger
@@ -37,9 +37,9 @@ type Resolver struct {
 
 // NewConfig creates Config object with default data, or with data coming
 // from opts.
-func NewConfig(text []rune, opts ...Opt) *Config {
+func NewConfig(opts ...Opt) *Config {
 	conf := &Config{
-		Language: NotSet,
+		Language: lang.NotSet,
 		TextOdds: bayes.LabelFreq{
 			bayes.Label("Name"):    0.0,
 			bayes.Label("NotName"): 0.0,
@@ -56,15 +56,9 @@ func NewConfig(text []rune, opts ...Opt) *Config {
 	}
 	for _, o := range opts {
 		err := o(conf)
-		util.Check(err)
+		Check(err)
 	}
 
-	if conf.Language == NotSet {
-		conf.Language = DetectLanguage(text)
-		if conf.Language != UnknownLanguage {
-			conf.Bayes = true
-		}
-	}
 	return conf
 }
 
@@ -72,9 +66,9 @@ func NewConfig(text []rune, opts ...Opt) *Config {
 type Opt func(g *Config) error
 
 // WithLanguage option forces a specific language to be associated with a text.
-func WithLanguage(lang Language) func(*Config) error {
+func WithLanguage(l lang.Language) func(*Config) error {
 	return func(conf *Config) error {
-		conf.Language = lang
+		conf.Language = l
 		return nil
 	}
 }

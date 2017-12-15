@@ -1,4 +1,4 @@
-package heuristic
+package nlp
 
 import (
 	"github.com/gnames/gnfinder/dict"
@@ -6,6 +6,6 @@ import (
 	"github.com/gnames/gnfinder/util"
 )
 
-func TagTokens(ts []token.Token, d *dict.Dictionary, text []rune, conf *util.Config) {
+func TagTokens(ts []token.Token, d *dict.Dictionary, conf *util.Config) {
 
 }
