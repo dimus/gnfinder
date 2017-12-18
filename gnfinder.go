@@ -41,15 +41,15 @@ func FindNames(text []rune, d *dict.Dictionary, opts ...util.Opt) Output {
 func collectOutput(ts []token.Token, text []rune,
 	m *util.Model) Output {
 	var names []Name
-	for i := range tokens {
-		u := &tokens[i]
-		if u.Kind == token.NotName {
+	l := len(ts)
+	for i := range ts {
+		u := &ts[i]
+		if u.Decision == token.NotName {
 			continue
 		}
-		s := &tokens[i+u.SpeciesIndexOffset]
-		name := TokensToName(u, s, t)
+		name := TokensToName(ts[i:util.UpperIndex(i, l)], text)
 		names = append(names, name)
 	}
-	output := NewOutput(names, tokens, gnf)
+	output := NewOutput(names, ts, m)
 	return output
 }

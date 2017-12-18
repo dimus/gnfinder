@@ -20,11 +20,7 @@ func TagTokens(ts []token.Token, d *dict.Dictionary, m *util.Model) {
 		}
 
 		t.Features.SetUninomialDict(t, d)
-		upperIndex := i + 4
-		if l < upperIndex {
-			upperIndex = l
-		}
-		exploreNameCandidate(ts[i:upperIndex], d, m)
+		exploreNameCandidate(ts[i:util.UpperIndex(i, l)], d, m)
 	}
 }
 

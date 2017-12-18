@@ -7,3 +7,13 @@ func Check(err error) {
 		panic(err)
 	}
 }
+
+// UpperIndex takes an index of a token and length of the tokens slice and
+// returns an upper index of what could be a slce of a name.
+func UpperIndex(i int, l int) int {
+	upperIndex := i + 4
+	if l < upperIndex {
+		upperIndex = l
+	}
+	return upperIndex
+}

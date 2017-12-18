@@ -2,6 +2,8 @@ package gnfinder
 
 import (
 	"bytes"
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/gnames/bayes"
@@ -48,7 +50,7 @@ type Name struct {
 	Verbatim    string            `json:"verbatim"`
 	Name        string            `json:"name"`
 	Odds        float64           `json:"odds,omitempty"`
-	Likelihoods bayes.Likelihoods `json:"likelihoods,omitempty"`
+	OddsDetails bayes.Likelihoods `json:"odds_details,omitempty"`
 	OffsetStart int               `json:"start"`
 	OffsetEnd   int               `json:"end"`
 	Annotation  string            `json:"annotation"`
@@ -69,13 +71,126 @@ func (o *Output) FromJSON(data []byte) {
 }
 
 // NewOutput is a constructor for Output type.
-func NewOutput(names []Name, tokens []token.Token, gnf *GnFinder) Output {
-	m := Meta{
-		Date:                time.Now(),
-		TotalTokens:         len(tokens),
-		TotalNameCandidates: candidatesNum(tokens),
-		TotalNames:          len(names),
+func NewOutput(names []Name, ts []token.Token, m *util.Model) Output {
+	meta := Meta{
+		Date:        time.Now(),
+		TotalTokens: len(ts), TotalNameCandidates: candidatesNum(ts),
+		TotalNames: len(names),
 	}
-	o := Output{Meta: m, Names: names}
+	o := Output{Meta: meta, Names: names}
 	return o
+}
+
+func TokensToName(ts []token.Token, text []rune) Name {
+	u := &ts[0]
+	switch {
+	case u.Indices.Species == 0:
+		return uninomialName(u, text)
+	case u.Indices.Infraspecies == 0:
+		return speciesName(u, &ts[u.Indices.Species], text)
+	default:
+		return infraspeciesName(ts, text)
+	}
+}
+
+func uninomialName(u *token.Token, text []rune) Name {
+	name := Name{
+		Type:        u.Decision.String(),
+		Verbatim:    string(text[u.Start:u.End]),
+		Name:        u.Cleaned,
+		OffsetStart: u.Start,
+		OffsetEnd:   u.End,
+		Odds:        u.Odds,
+	}
+	if len(u.OddsDetails) == 0 {
+		return name
+	}
+	if l, ok := u.OddsDetails[bayes.Label("Name")]; ok {
+		name.OddsDetails = make(bayes.Likelihoods)
+		name.OddsDetails[bayes.Label("Name")] = l
+	}
+	return name
+}
+
+func speciesName(g *token.Token, s *token.Token, text []rune) Name {
+	name := Name{
+		Type:        g.Decision.String(),
+		Verbatim:    string(text[g.Start:s.End]),
+		Name:        fmt.Sprintf("%s %s", g.Cleaned, strings.ToLower(s.Cleaned)),
+		OffsetStart: g.Start,
+		OffsetEnd:   s.End,
+		Odds:        g.Odds * s.Odds,
+	}
+	if len(g.OddsDetails) == 0 || len(s.OddsDetails) == 0 ||
+		len(g.LabelFreq) == 0 {
+		return name
+	}
+	if lg, ok := g.OddsDetails[bayes.Label("Name")]; ok {
+		name.OddsDetails = make(bayes.Likelihoods)
+		name.OddsDetails[bayes.Label("Name")] = lg
+		if ls, ok := s.OddsDetails[bayes.Label("Name")]; ok {
+			for k, v := range ls {
+				name.OddsDetails[bayes.Label("Name")][k] = v
+			}
+		}
+	}
+	return name
+}
+
+func infraspeciesName(ts []token.Token, text []rune) Name {
+	g := &ts[0]
+	sp := &ts[g.Indices.Species]
+	isp := &ts[g.Indices.Infraspecies]
+
+	var rank *token.Token
+	if g.Indices.Rank > 0 {
+		rank = &ts[g.Indices.Rank]
+	}
+
+	name := Name{
+		Type:        g.Decision.String(),
+		Verbatim:    string(text[g.Start:isp.End]),
+		Name:        infraspeciesString(g, sp, rank, isp),
+		OffsetStart: g.Start,
+		OffsetEnd:   isp.End,
+		Odds:        g.Odds * sp.Odds * isp.Odds,
+	}
+	if len(g.OddsDetails) == 0 || len(sp.OddsDetails) == 0 ||
+		len(isp.OddsDetails) == 0 || len(g.LabelFreq) == 0 {
+		return name
+	}
+	if lg, ok := g.OddsDetails[bayes.Label("Name")]; ok {
+		name.OddsDetails = make(bayes.Likelihoods)
+		name.OddsDetails[bayes.Label("Name")] = lg
+		if ls, ok := sp.OddsDetails[bayes.Label("Name")]; ok {
+			for k, v := range ls {
+				name.OddsDetails[bayes.Label("Name")][k] = v
+			}
+		}
+		if li, ok := isp.OddsDetails[bayes.Label("Name")]; ok {
+			for k, v := range li {
+				name.OddsDetails[bayes.Label("Name")][k] = v
+			}
+		}
+	}
+	return name
+}
+
+func infraspeciesString(g *token.Token, sp *token.Token, rank *token.Token,
+	isp *token.Token) string {
+	if g.Indices.Rank == 0 {
+		return fmt.Sprintf("%s %s %s", g.Cleaned, sp.Cleaned, isp.Cleaned)
+	}
+	return fmt.Sprintf("%s %s %s %s", g.Cleaned, sp.Cleaned, rank.Cleaned,
+		isp.Cleaned)
+}
+
+func candidatesNum(ts []token.Token) int {
+	var num int
+	for _, v := range ts {
+		if v.Features.Capitalized {
+			num++
+		}
+	}
+	return num
 }
