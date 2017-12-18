@@ -35,10 +35,11 @@ func FindNames(text []rune, d *dict.Dictionary, opts ...util.Opt) Output {
 		nlp.TagTokens(tokens, d, m)
 	}
 
-	return collectOutput(tokens, text, m)
+	return CollectOutput(tokens, text, m)
 }
 
-func collectOutput(ts []token.Token, text []rune,
+// CollectOutput takes tagged tokens and assembles gnfinder output out of them.
+func CollectOutput(ts []token.Token, text []rune,
 	m *util.Model) Output {
 	var names []Name
 	l := len(ts)
