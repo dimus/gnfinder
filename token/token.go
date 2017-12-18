@@ -43,12 +43,16 @@ const (
 	Uninomial
 	Binomial
 	PossibleBinomial
+	Trinomial
 	BayesUninomial
 	BayesBinomial
+	BayesTrinomial
 )
 
 var decisionsStrings = [...]string{"NotName", "Uninomial", "Binomial",
-	"PossibleBinomial", "Uninomial(nlp)", "Binomial(nlp)"}
+	"PossibleBinomial", "Trinomial", "Uninomial(nlp)", "Binomial(nlp)",
+	"Trinomial(nlp)",
+}
 
 // String representation of a Decision
 func (h Decision) String() string {
