@@ -116,6 +116,7 @@ func (t *Token) Clean() {
 	} else {
 		// makes it impossible to have capitalized species
 		f.setPotentialBinomialSpecies(startEnd)
+		f.setPotentialTrinomialSpecies(startEnd, t.Raw)
 	}
 
 	if f.Abbr {

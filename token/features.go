@@ -15,6 +15,8 @@ type Features struct {
 	PotentialBinomialGenus bool
 	// The token has necessary qualities to be a start of a binomial.
 	PotentialBinomialSpecies bool
+	// The token has necessary quality to be a species part of trinomial.
+	PotentialTrinomialSpecies bool
 	// Capitalized feature of the first alphabetic character.
 	Capitalized bool
 	// CapitalizedSpecies -- the first species lphabetic character is capitalized.
@@ -76,6 +78,11 @@ func (f *Features) setPotentialBinomialSpecies(startEnd *[2]int) {
 	if lenClean >= 2 && startEnd[0] == 0 {
 		f.PotentialBinomialSpecies = true
 	}
+}
+
+func (f *Features) setPotentialTrinomialSpecies(startEnd *[2]int, raw []rune) {
+	cleanEnd := len(raw) == startEnd[1]+1
+	f.PotentialTrinomialSpecies = cleanEnd
 }
 
 func (f *Features) SetUninomialDict(t *Token, d *dict.Dictionary) {

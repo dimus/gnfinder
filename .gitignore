@@ -1,0 +1,7 @@
+scripts/gnfinder
+cmd/gnfinder/**
+cmd/training/**
+t
+t.json
+*test
+.idea
