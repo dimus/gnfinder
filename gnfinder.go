@@ -1,4 +1,4 @@
-//go:generate statik -f -src=./data/dictionaries
+//go:generate statik -f -src=./data/files
 package gnfinder
 
 import (
