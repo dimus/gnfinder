@@ -38,57 +38,57 @@ type Features struct {
 	SpeciesDict dict.DictionaryType
 }
 
-func (f *Features) setParensStart(firstRune rune) {
-	f.ParensStart = firstRune == rune('(')
+func (t *Token) setParensStart(firstRune rune) {
+	t.ParensStart = firstRune == rune('(')
 }
 
-func (f *Features) setParensEnd(lastRune rune) {
-	f.ParensEnd = lastRune == rune(')')
+func (t *Token) setParensEnd(lastRune rune) {
+	t.ParensEnd = lastRune == rune(')')
 }
 
-func (f *Features) setCapitalized(firstAlphabetRune rune) {
-	f.Capitalized = unicode.IsUpper(firstAlphabetRune)
+func (t *Token) setCapitalized(firstAlphabetRune rune) {
+	t.Capitalized = unicode.IsUpper(firstAlphabetRune)
 }
 
-func (f *Features) setAbbr(raw []rune, startEnd *[2]int) {
+func (t *Token) setAbbr(raw []rune, startEnd *[2]int) {
 	l := len(raw)
 	lenClean := startEnd[1] - startEnd[0] + 1
 	if lenClean < 4 && l > 1 && unicode.IsLetter(raw[l-2]) &&
 		raw[l-1] == rune('.') {
-		f.Abbr = true
+		t.Abbr = true
 	}
 }
 
-func (f *Features) setPotentialBinomialGenus(startEnd *[2]int, raw []rune) {
+func (t *Token) setPotentialBinomialGenus(startEnd *[2]int, raw []rune) {
 	lenRaw := len(raw)
 	lenClean := startEnd[1] - startEnd[0] + 1
 	cleanEnd := lenRaw == startEnd[1]+1
 	switch lenClean {
 	case 0:
-		f.PotentialBinomialGenus = false
+		t.PotentialBinomialGenus = false
 	case 1:
-		f.PotentialBinomialGenus = f.Abbr
+		t.PotentialBinomialGenus = t.Abbr
 	case 2, 3:
-		f.PotentialBinomialGenus = f.Abbr || cleanEnd
+		t.PotentialBinomialGenus = t.Abbr || cleanEnd
 	default:
-		f.PotentialBinomialGenus = cleanEnd
+		t.PotentialBinomialGenus = cleanEnd
 	}
 }
 
-func (f *Features) setStartsWithLetter(startEnd *[2]int) {
+func (t *Token) setStartsWithLetter(startEnd *[2]int) {
 	lenClean := startEnd[1] - startEnd[0] + 1
 	if lenClean >= 2 && startEnd[0] == 0 {
-		f.StartsWithLetter = true
+		t.StartsWithLetter = true
 	}
 }
 
-func (f *Features) setEndsWithLetter(startEnd *[2]int, raw []rune) {
+func (t *Token) setEndsWithLetter(startEnd *[2]int, raw []rune) {
 	cleanEnd := len(raw) == startEnd[1]+1
-	f.EndsWithLetter = cleanEnd
+	t.EndsWithLetter = cleanEnd
 }
 
-func (f *Features) SetUninomialDict(t *Token, d *dict.Dictionary) {
-	if f.UninomialDict != dict.NotSet {
+func (t *Token) SetUninomialDict(d *dict.Dictionary) {
+	if t.UninomialDict != dict.NotSet {
 		return
 	}
 	name := t.Cleaned
@@ -100,22 +100,22 @@ func (f *Features) SetUninomialDict(t *Token, d *dict.Dictionary) {
 
 	switch {
 	case in(d.WhiteGenera):
-		f.UninomialDict = dict.WhiteGenus
+		t.UninomialDict = dict.WhiteGenus
 	case in(d.GreyGenera):
-		f.UninomialDict = dict.GreyGenus
+		t.UninomialDict = dict.GreyGenus
 	case in(d.WhiteUninomials):
-		f.UninomialDict = dict.WhiteUninomial
+		t.UninomialDict = dict.WhiteUninomial
 	case in(d.GreyUninomials):
-		f.UninomialDict = dict.GreyUninomial
+		t.UninomialDict = dict.GreyUninomial
 	case inlow(d.BlackUninomials):
-		f.UninomialDict = dict.BlackUninomial
+		t.UninomialDict = dict.BlackUninomial
 	default:
-		f.UninomialDict = dict.NotInDictionary
+		t.UninomialDict = dict.NotInDictionary
 	}
 }
 
-func (f *Features) SetSpeciesDict(t *Token, d *dict.Dictionary) {
-	if f.SpeciesDict != dict.NotSet {
+func (t *Token) SetSpeciesDict(d *dict.Dictionary) {
+	if t.SpeciesDict != dict.NotSet {
 		return
 	}
 	name := strings.ToLower(t.Cleaned)
@@ -123,18 +123,18 @@ func (f *Features) SetSpeciesDict(t *Token, d *dict.Dictionary) {
 
 	switch {
 	case in(d.WhiteSpecies):
-		f.SpeciesDict = dict.WhiteSpecies
+		t.SpeciesDict = dict.WhiteSpecies
 	case in(d.GreySpecies):
-		f.SpeciesDict = dict.GreySpecies
+		t.SpeciesDict = dict.GreySpecies
 	case in(d.BlackSpecies):
-		f.SpeciesDict = dict.BlackSpecies
+		t.SpeciesDict = dict.BlackSpecies
 	default:
-		f.SpeciesDict = dict.NotInDictionary
+		t.SpeciesDict = dict.NotInDictionary
 	}
 }
 
-func (f *Features) SetRank(t *Token, d *dict.Dictionary) {
+func (t *Token) SetRank(d *dict.Dictionary) {
 	if _, ok := d.Ranks[string(t.Raw)]; ok {
-		f.RankLike = true
+		t.RankLike = true
 	}
 }

@@ -116,24 +116,23 @@ func NewToken(text []rune, start int, end int) Token {
 // version.
 func (t *Token) Clean() {
 	l := len(t.Raw)
-	f := &t.Features
 
-	f.setParensStart(t.Raw[0])
-	f.setParensEnd(t.Raw[l-1])
+	t.setParensStart(t.Raw[0])
+	t.setParensEnd(t.Raw[l-1])
 
 	res, startEnd := t.normalize()
 
-	f.setAbbr(t.Raw, startEnd)
+	t.setAbbr(t.Raw, startEnd)
 	if t.Features.Capitalized {
 		res[0] = unicode.ToUpper(res[0])
-		f.setPotentialBinomialGenus(startEnd, t.Raw)
+		t.setPotentialBinomialGenus(startEnd, t.Raw)
 	} else {
 		// makes it impossible to have capitalized species
-		f.setStartsWithLetter(startEnd)
-		f.setEndsWithLetter(startEnd, t.Raw)
+		t.setStartsWithLetter(startEnd)
+		t.setEndsWithLetter(startEnd, t.Raw)
 	}
 
-	if f.Abbr {
+	if t.Abbr {
 		res = append(res, rune('.'))
 	}
 	t.Cleaned = string(res)
@@ -147,7 +146,7 @@ func (t *Token) normalize() ([]rune, *[2]int) {
 		if unicode.IsLetter(v) || v == rune('-') {
 			if firstLetter {
 				startEnd[0] = i
-				t.Features.setCapitalized(v)
+				t.setCapitalized(v)
 				firstLetter = false
 			}
 			startEnd[1] = i
@@ -170,7 +169,7 @@ func (t *Token) InParentheses() bool {
 // SetIndices takes
 func SetIndices(ts []Token, d *dict.Dictionary) {
 	t := &ts[0]
-	t.SetUninomialDict(t, d)
+	t.SetUninomialDict(d)
 	l := len(ts)
 	if !t.PotentialBinomialGenus || l == 1 ||
 		(l == 2 && !ts[1].StartsWithLetter) {
@@ -180,7 +179,7 @@ func SetIndices(ts []Token, d *dict.Dictionary) {
 	if l == 2 {
 		t.Indices.Species = 1
 		sp := &ts[1]
-		sp.SetSpeciesDict(sp, d)
+		sp.SetSpeciesDict(d)
 		return
 	}
 
@@ -190,7 +189,7 @@ func SetIndices(ts []Token, d *dict.Dictionary) {
 	}
 	t.Indices.Species = iSp
 	sp := &ts[iSp]
-	sp.SetSpeciesDict(sp, d)
+	sp.SetSpeciesDict(d)
 
 	iIsp := iSp + 1
 	if l > iIsp && checkRank(&ts[iIsp], d) {
@@ -204,10 +203,10 @@ func SetIndices(ts []Token, d *dict.Dictionary) {
 
 	t.Indices.Infraspecies = iIsp
 	isp := &ts[iIsp]
-	isp.SetSpeciesDict(isp, d)
+	isp.SetSpeciesDict(d)
 }
 
 func checkRank(t *Token, d *dict.Dictionary) bool {
-	t.SetRank(t, d)
+	t.SetRank(d)
 	return t.RankLike
 }
