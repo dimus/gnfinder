@@ -8,7 +8,6 @@ import (
 	"github.com/gnames/bayes"
 	"github.com/gnames/gnfinder/dict"
 	"github.com/gnames/gnfinder/lang"
-	"github.com/gnames/gnfinder/nlp"
 	"github.com/gnames/gnfinder/token"
 	"github.com/gnames/gnfinder/util"
 	jsoniter "github.com/json-iterator/go"
@@ -61,7 +60,8 @@ func Train(path string, data *TrainingLanguageData,
 	return nb
 }
 
-func processNames(ns *TrainingNames, d *dict.Dictionary) []bayes.LabeledFeatures {
+func processNames(ns *TrainingNames,
+	d *dict.Dictionary) []bayes.LabeledFeatures {
 	var lfs []bayes.LabeledFeatures
 	label := Name
 	for _, v := range *ns {
@@ -71,18 +71,10 @@ func processNames(ns *TrainingNames, d *dict.Dictionary) []bayes.LabeledFeatures
 		for i := range ts {
 			t := &ts[i]
 			if (t.Start <= v.Start && t.End > v.Start) || len(v.Text) == 0 {
-				t.Features.SetUninomialDict(t, d)
-				if t.Features.PotentialBinomialGenus {
-					setIndices(t, ts, i, l, d)
-				}
-				fUni, fSp, err := nlp.BayesFeatures(ts, i)
-				if err == nil {
-					fs := features(fUni)
-					if len(fSp) > 0 {
-						fs = append(fs, features(fSp)...)
-					}
-					lfs = append(lfs, bayes.LabeledFeatures{Features: fs, Label: label})
-				}
+				ts2 := ts[i:util.UpperIndex(i, l)]
+				token.SetIndices(ts2, d)
+				fs := features(BayesFeatures(ts2))
+				lfs = append(lfs, bayes.LabeledFeatures{Features: fs, Label: label})
 			}
 		}
 	}
@@ -97,19 +89,10 @@ func processNoNames(t []rune, d *dict.Dictionary) []bayes.LabeledFeatures {
 	for i := range ts {
 		t := &ts[i]
 		if t.Features.Capitalized {
-			t.Features.SetUninomialDict(t, d)
-			if t.Features.PotentialBinomialGenus {
-				t.SpeciesIndexOffset = t.SpeciesOffset(ts, i, l, d)
-			}
-			fUni, fSp, err := BayesFeatures(ts, i)
-			if err == nil {
-				fs := features(fUni)
-				if len(fSp) > 0 {
-					fs = append(fs, features(fSp)...)
-				}
-				lfs = append(lfs,
-					bayes.LabeledFeatures{Features: fs, Label: label})
-			}
+			ts2 := ts[i:util.UpperIndex(i, l)]
+			token.SetIndices(ts2, d)
+			fs := features(BayesFeatures(ts2))
+			lfs = append(lfs, bayes.LabeledFeatures{Features: fs, Label: label})
 		}
 	}
 	return lfs
