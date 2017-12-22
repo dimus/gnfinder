@@ -10,9 +10,9 @@ import (
 )
 
 func main() {
-	dir := filepath.Join("..", "..", "scripts")
-	data := dict.LoadTrainingData(filepath.Join(dir, "training"))
-	output := filepath.Join(dir, "data", "nlp")
+	dir := filepath.Join("..", "..", "data")
+	data := nlp.LoadTrainingData(filepath.Join(dir, "training"))
+	output := filepath.Join(dir, "nlp")
 	d := dict.LoadDictionary()
 	for lang, v := range *data {
 		path := filepath.Join(output, lang.String(), "bayes.json")
