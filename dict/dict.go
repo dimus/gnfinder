@@ -15,15 +15,15 @@ import (
 type DictionaryType int
 
 func (d DictionaryType) String() string {
-	types := [...]string{"NotInDictionary", "WhiteGenus", "GreyGenus",
+	types := [...]string{"NotSet", "WhiteGenus", "GreyGenus",
 		"WhiteUninomial", "GreyUninomial", "BlackUninomial", "WhiteSpecies",
-		"GreySpecies", "BlackSpecies"}
+		"GreySpecies", "BlackSpecies", "Rank", "NotInDictionary"}
 	return types[d]
 }
 
 // DictionaryType dictionaries
 const (
-	NotInDictionary DictionaryType = iota
+	NotSet DictionaryType = iota
 	WhiteGenus
 	GreyGenus
 	WhiteUninomial
@@ -33,6 +33,7 @@ const (
 	GreySpecies
 	BlackSpecies
 	Rank
+	NotInDictionary
 )
 
 // Dictionary contains dictionaries used for detecting scientific names

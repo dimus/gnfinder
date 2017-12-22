@@ -39,11 +39,7 @@ type Resolver struct {
 // from opts.
 func NewModel(opts ...Opt) *Model {
 	m := &Model{
-		Language: lang.NotSet,
-		TextOdds: bayes.LabelFreq{
-			bayes.Label("Name"):    0.0,
-			bayes.Label("NotName"): 0.0,
-		},
+		Language:           lang.NotSet,
 		BayesOddsThreshold: 100.0,
 		// NameDistribution: NameDistribution{
 		//   Index: make(map[int]int),

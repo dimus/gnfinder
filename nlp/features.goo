@@ -1,0 +1,62 @@
+package nlp
+
+import (
+	"fmt"
+	"strconv"
+
+	"github.com/gnames/gnfinder/token"
+)
+
+// BayesFeatures creates slices of features for a token that might represent
+// genus or other uninomial
+func BayesFeatures(ts []token.Token, index int) ([]BayesF, []BayesF, error) {
+	var fGen []BayesF
+	var fSp []BayesF
+	i := index
+	var u, s *token.Token
+	u = &ts[i]
+	if u.SpeciesIndexOffset > 0 {
+		s = &ts[i+u.SpeciesIndexOffset]
+	}
+	if u.Capitalized {
+		return convertFeatures(u, s)
+	}
+	return fGen, fSp, fmt.Errorf("Not a valid name candidate: %s", string(u.Raw))
+}
+
+func convertFeatures(u *token.Token,
+	s *token.Token) ([]BayesF, []BayesF, error) {
+	var fSp []BayesF
+	fUni := []BayesF{
+		{"uniAbbr", strconv.FormatBool(u.Abbr)},
+	}
+	if !u.Abbr {
+		fUni = append(fUni,
+			BayesF{"uniLen", strconv.Itoa(len(u.Cleaned))},
+			BayesF{"uniDict", u.UninomialDict.String()})
+	}
+	if w3 := wordEnd(u); !u.Abbr && w3 != "" {
+		fUni = append(fUni, BayesF{"uniEnd3", w3})
+	}
+	if u.SpeciesIndexOffset > 0 {
+		fSp = []BayesF{
+			{"spCapitalized", strconv.FormatBool(s.Capitalized)},
+			{"spLen", strconv.Itoa(len(s.Cleaned))},
+			{"spDict", s.SpeciesDict.String()},
+		}
+		if w3 := wordEnd(s); w3 != "" {
+			fSp = append(fSp, BayesF{"spEnd3", w3})
+		}
+	}
+	return fUni, fSp, nil
+}
+
+func wordEnd(t *token.Token) string {
+	name := []rune(t.Cleaned)
+	l := len(name)
+	if l < 4 {
+		return ""
+	}
+	w3 := string(name[l-3 : l])
+	return w3
+}

@@ -36,7 +36,7 @@ var _ = Describe("Gnfinder", func() {
 
 		It("finds names in a book", func() {
 			output := FindNames([]rune(string(book)), dictionary)
-			Expect(len(output.Names)).To(Equal(4455))
+			Expect(len(output.Names)).To(Equal(4459))
 		})
 
 		// 	It("finds names in a book with new BayesOddsThreshold", func() {

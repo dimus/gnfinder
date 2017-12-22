@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/gnames/bayes"
+	"github.com/gnames/gnfinder/nlp"
 	"github.com/gnames/gnfinder/token"
 	"github.com/gnames/gnfinder/util"
 	jsoniter "github.com/json-iterator/go"
@@ -83,13 +84,15 @@ func NewOutput(names []Name, ts []token.Token, m *util.Model) Output {
 
 func TokensToName(ts []token.Token, text []rune) Name {
 	u := &ts[0]
-	switch {
-	case u.Indices.Species == 0:
+	switch u.Decision.Cardinality() {
+	case 1:
 		return uninomialName(u, text)
-	case u.Indices.Infraspecies == 0:
+	case 2:
 		return speciesName(u, &ts[u.Indices.Species], text)
-	default:
+	case 3:
 		return infraspeciesName(ts, text)
+	default:
+		panic(fmt.Errorf("Unkown Decision: %s", u.Decision))
 	}
 }
 
@@ -105,9 +108,9 @@ func uninomialName(u *token.Token, text []rune) Name {
 	if len(u.OddsDetails) == 0 {
 		return name
 	}
-	if l, ok := u.OddsDetails[bayes.Label("Name")]; ok {
+	if l, ok := u.OddsDetails[nlp.Name]; ok {
 		name.OddsDetails = make(bayes.Likelihoods)
-		name.OddsDetails[bayes.Label("Name")] = l
+		name.OddsDetails[nlp.Name] = l
 	}
 	return name
 }
@@ -125,12 +128,12 @@ func speciesName(g *token.Token, s *token.Token, text []rune) Name {
 		len(g.LabelFreq) == 0 {
 		return name
 	}
-	if lg, ok := g.OddsDetails[bayes.Label("Name")]; ok {
+	if lg, ok := g.OddsDetails[nlp.Name]; ok {
 		name.OddsDetails = make(bayes.Likelihoods)
-		name.OddsDetails[bayes.Label("Name")] = lg
-		if ls, ok := s.OddsDetails[bayes.Label("Name")]; ok {
+		name.OddsDetails[nlp.Name] = lg
+		if ls, ok := s.OddsDetails[nlp.Name]; ok {
 			for k, v := range ls {
-				name.OddsDetails[bayes.Label("Name")][k] = v
+				name.OddsDetails[nlp.Name][k] = v
 			}
 		}
 	}
@@ -159,17 +162,17 @@ func infraspeciesName(ts []token.Token, text []rune) Name {
 		len(isp.OddsDetails) == 0 || len(g.LabelFreq) == 0 {
 		return name
 	}
-	if lg, ok := g.OddsDetails[bayes.Label("Name")]; ok {
+	if lg, ok := g.OddsDetails[nlp.Name]; ok {
 		name.OddsDetails = make(bayes.Likelihoods)
-		name.OddsDetails[bayes.Label("Name")] = lg
-		if ls, ok := sp.OddsDetails[bayes.Label("Name")]; ok {
+		name.OddsDetails[nlp.Name] = lg
+		if ls, ok := sp.OddsDetails[nlp.Name]; ok {
 			for k, v := range ls {
-				name.OddsDetails[bayes.Label("Name")][k] = v
+				name.OddsDetails[nlp.Name][k] = v
 			}
 		}
-		if li, ok := isp.OddsDetails[bayes.Label("Name")]; ok {
+		if li, ok := isp.OddsDetails[nlp.Name]; ok {
 			for k, v := range li {
-				name.OddsDetails[bayes.Label("Name")][k] = v
+				name.OddsDetails[nlp.Name][k] = v
 			}
 		}
 	}

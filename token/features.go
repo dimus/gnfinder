@@ -14,9 +14,9 @@ type Features struct {
 	// The name looks like a possible genus name.
 	PotentialBinomialGenus bool
 	// The token has necessary qualities to be a start of a binomial.
-	PotentialBinomialSpecies bool
+	StartsWithLetter bool
 	// The token has necessary quality to be a species part of trinomial.
-	PotentialTrinomialSpecies bool
+	EndsWithLetter bool
 	// Capitalized feature of the first alphabetic character.
 	Capitalized bool
 	// CapitalizedSpecies -- the first species lphabetic character is capitalized.
@@ -29,6 +29,8 @@ type Features struct {
 	ParensEndSpecies bool
 	// Abbr feature: token ends with a period.
 	Abbr bool
+	// RankLike is true if token is a known infraspecific rank
+	RankLike bool
 	// UninomialDict defines which Genera or Uninomials dictionary (if any)
 	// contained the token.
 	UninomialDict dict.DictionaryType
@@ -73,19 +75,22 @@ func (f *Features) setPotentialBinomialGenus(startEnd *[2]int, raw []rune) {
 	}
 }
 
-func (f *Features) setPotentialBinomialSpecies(startEnd *[2]int) {
+func (f *Features) setStartsWithLetter(startEnd *[2]int) {
 	lenClean := startEnd[1] - startEnd[0] + 1
 	if lenClean >= 2 && startEnd[0] == 0 {
-		f.PotentialBinomialSpecies = true
+		f.StartsWithLetter = true
 	}
 }
 
-func (f *Features) setPotentialTrinomialSpecies(startEnd *[2]int, raw []rune) {
+func (f *Features) setEndsWithLetter(startEnd *[2]int, raw []rune) {
 	cleanEnd := len(raw) == startEnd[1]+1
-	f.PotentialTrinomialSpecies = cleanEnd
+	f.EndsWithLetter = cleanEnd
 }
 
 func (f *Features) SetUninomialDict(t *Token, d *dict.Dictionary) {
+	if f.UninomialDict != dict.NotSet {
+		return
+	}
 	name := t.Cleaned
 	in := func(dict map[string]struct{}) bool { _, ok := dict[name]; return ok }
 	inlow := func(dict map[string]struct{}) bool {
@@ -104,10 +109,15 @@ func (f *Features) SetUninomialDict(t *Token, d *dict.Dictionary) {
 		f.UninomialDict = dict.GreyUninomial
 	case inlow(d.BlackUninomials):
 		f.UninomialDict = dict.BlackUninomial
+	default:
+		f.UninomialDict = dict.NotInDictionary
 	}
 }
 
 func (f *Features) SetSpeciesDict(t *Token, d *dict.Dictionary) {
+	if f.SpeciesDict != dict.NotSet {
+		return
+	}
 	name := strings.ToLower(t.Cleaned)
 	in := func(dict map[string]struct{}) bool { _, ok := dict[name]; return ok }
 
@@ -118,5 +128,13 @@ func (f *Features) SetSpeciesDict(t *Token, d *dict.Dictionary) {
 		f.SpeciesDict = dict.GreySpecies
 	case in(d.BlackSpecies):
 		f.SpeciesDict = dict.BlackSpecies
+	default:
+		f.SpeciesDict = dict.NotInDictionary
+	}
+}
+
+func (f *Features) SetRank(t *Token, d *dict.Dictionary) {
+	if _, ok := d.Ranks[string(t.Raw)]; ok {
+		f.RankLike = true
 	}
 }

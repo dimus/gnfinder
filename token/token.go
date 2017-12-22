@@ -8,6 +8,7 @@ import (
 	"unicode"
 
 	"github.com/gnames/bayes"
+	"github.com/gnames/gnfinder/dict"
 )
 
 // Token represents a word separated by spaces in a text. Words split by new
@@ -55,14 +56,27 @@ var decisionsStrings = [...]string{"NotName", "Uninomial", "Binomial",
 }
 
 // String representation of a Decision
-func (h Decision) String() string {
-	return decisionsStrings[h]
+func (d Decision) String() string {
+	return decisionsStrings[d]
+}
+
+func (d Decision) Cardinality() int {
+	switch d {
+	case Uninomial, BayesUninomial:
+		return 1
+	case Binomial, PossibleBinomial, BayesBinomial:
+		return 2
+	case Trinomial, BayesTrinomial:
+		return 3
+	default:
+		return 0
+	}
 }
 
 // In returns true if a Decision is included in given constants.
-func (h Decision) In(hds ...Decision) bool {
-	for _, hd := range hds {
-		if h == hd {
+func (d Decision) In(ds ...Decision) bool {
+	for _, d2 := range ds {
+		if d == d2 {
 			return true
 		}
 	}
@@ -115,8 +129,8 @@ func (t *Token) Clean() {
 		f.setPotentialBinomialGenus(startEnd, t.Raw)
 	} else {
 		// makes it impossible to have capitalized species
-		f.setPotentialBinomialSpecies(startEnd)
-		f.setPotentialTrinomialSpecies(startEnd, t.Raw)
+		f.setStartsWithLetter(startEnd)
+		f.setEndsWithLetter(startEnd, t.Raw)
 	}
 
 	if f.Abbr {
@@ -151,4 +165,49 @@ func (t *Token) InParentheses() bool {
 		return true
 	}
 	return false
+}
+
+// SetIndices takes
+func SetIndices(ts []Token, d *dict.Dictionary) {
+	t := &ts[0]
+	t.SetUninomialDict(t, d)
+	l := len(ts)
+	if !t.PotentialBinomialGenus || l == 1 ||
+		(l == 2 && !ts[1].StartsWithLetter) {
+		return
+	}
+
+	if l == 2 {
+		t.Indices.Species = 1
+		sp := &ts[1]
+		sp.SetSpeciesDict(sp, d)
+		return
+	}
+
+	iSp := 1
+	if ts[1].InParentheses() {
+		iSp = 2
+	}
+	t.Indices.Species = iSp
+	sp := &ts[iSp]
+	sp.SetSpeciesDict(sp, d)
+
+	iIsp := iSp + 1
+	if l > iIsp && checkRank(&ts[iIsp], d) {
+		t.Indices.Rank = iIsp
+		iIsp++
+	}
+
+	if l <= iIsp {
+		return
+	}
+
+	t.Indices.Infraspecies = iIsp
+	isp := &ts[iIsp]
+	isp.SetSpeciesDict(isp, d)
+}
+
+func checkRank(t *Token, d *dict.Dictionary) bool {
+	t.SetRank(t, d)
+	return t.RankLike
 }
