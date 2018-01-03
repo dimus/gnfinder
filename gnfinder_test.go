@@ -8,7 +8,7 @@ import (
 
 var _ = Describe("Gnfinder", func() {
 	Describe("FindNames", func() {
-		It("finds names", func() {
+		FIt("finds names", func() {
 			s := "Plantago major and Pardosa moesta are spiders and plants"
 			output := FindNames([]rune(s), dictionary)
 			Expect(output.Names[0].Name).To(Equal("Plantago major"))

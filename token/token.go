@@ -166,7 +166,10 @@ func (t *Token) InParentheses() bool {
 	return false
 }
 
-// SetIndices takes
+// SetIndices takes an slice of tokens that correspond to a name candidate.
+// It analyses the tokens and sets Token.Indices according to feasibility
+// of the input tokens to form a scientific name. It checks if there is
+// a possible species, ranks, and infraspecies.
 func SetIndices(ts []Token, d *dict.Dictionary) {
 	t := &ts[0]
 	t.SetUninomialDict(d)

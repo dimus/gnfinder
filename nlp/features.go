@@ -13,6 +13,22 @@ type BayesF struct {
 	value string
 }
 
+// FeatureSet splits features into Uninomial, Species, Ifraspecies groups
+type FeatureSet struct {
+	Uninomial []BayesF
+	Speces    []BayesF
+	InfraSp   []BayesF
+}
+
+func (fs *FeatureSet) Flatten() []bayes.Featurer {
+	l := len(fs.Uninomial) + len(fs.Speces) + len(fs.InfraSp)
+	res := make([]bayes.Featurer, 0, l)
+	res = append(res, features(fs.Uninomial)...)
+	res = append(res, features(fs.Speces)...)
+	res = append(res, features(fs.InfraSp)...)
+	return res
+}
+
 // Name is required by bayes.Featurer
 func (b BayesF) Name() bayes.FeatureName { return bayes.FeatureName(b.name) }
 
@@ -23,8 +39,8 @@ func (b BayesF) Value() bayes.FeatureValue {
 
 // BayesFeatures creates slices of features for a token that might represent
 // genus or other uninomial
-func BayesFeatures(ts []token.Token) []BayesF {
-	var fs []BayesF
+func BayesFeatures(ts []token.Token) FeatureSet {
+	var fs FeatureSet
 	var u, sp, isp *token.Token
 	u = &ts[0]
 
@@ -43,31 +59,37 @@ func BayesFeatures(ts []token.Token) []BayesF {
 	return convertFeatures(u, sp, isp)
 }
 
-func convertFeatures(u *token.Token,
-	sp *token.Token, isp *token.Token) []BayesF {
-	fs := []BayesF{
+func convertFeatures(u *token.Token, sp *token.Token,
+	isp *token.Token) FeatureSet {
+	var fs FeatureSet
+	fs.Uninomial = []BayesF{
 		{"uniAbbr", strconv.FormatBool(u.Abbr)},
 	}
 	if !u.Abbr {
-		fs = append(fs,
+		fs.Uninomial = append(fs.Uninomial,
 			BayesF{"uniLen", strconv.Itoa(len(u.Cleaned))},
 			BayesF{"uniDict", u.UninomialDict.String()},
 		)
 	}
 	if w3 := wordEnd(u); !u.Abbr && w3 != "" {
-		fs = append(fs, BayesF{"uniEnd3", w3})
+		fs.Uninomial = append(fs.Uninomial, BayesF{"uniEnd3", w3})
 	}
 	if u.Indices.Species > 0 {
-		fs = append(fs,
+		fs.Speces = append(fs.Speces,
 			BayesF{"spLen", strconv.Itoa(len(sp.Cleaned))},
 			BayesF{"spDict", sp.SpeciesDict.String()},
 		)
 		if w3 := wordEnd(sp); w3 != "" {
-			fs = append(fs, BayesF{"spEnd3", w3})
+			fs.Speces = append(fs.Speces, BayesF{"spEnd3", w3})
+		}
+	}
+	if u.Indices.Rank > 0 {
+		fs.InfraSp = []BayesF{
+			{"ispRank", "true"},
 		}
 	}
 	if u.Indices.Infraspecies > 0 {
-		fs = append(fs,
+		fs.InfraSp = append(fs.InfraSp,
 			BayesF{"ispLen", strconv.Itoa(len(isp.Cleaned))},
 			BayesF{"ispDict", isp.SpeciesDict.String()},
 		)

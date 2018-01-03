@@ -73,8 +73,13 @@ func processNames(ns *TrainingNames,
 			if (t.Start <= v.Start && t.End > v.Start) || len(v.Text) == 0 {
 				ts2 := ts[i:util.UpperIndex(i, l)]
 				token.SetIndices(ts2, d)
-				fs := features(BayesFeatures(ts2))
-				lfs = append(lfs, bayes.LabeledFeatures{Features: fs, Label: label})
+				fs := BayesFeatures(ts2)
+				lfs = []bayes.LabeledFeatures{
+					{
+						Features: fs.Flatten(),
+						Label:    label,
+					},
+				}
 			}
 		}
 	}
@@ -91,19 +96,14 @@ func processNoNames(t []rune, d *dict.Dictionary) []bayes.LabeledFeatures {
 		if t.Features.Capitalized {
 			ts2 := ts[i:util.UpperIndex(i, l)]
 			token.SetIndices(ts2, d)
-			fs := features(BayesFeatures(ts2))
-			lfs = append(lfs, bayes.LabeledFeatures{Features: fs, Label: label})
+			fs := BayesFeatures(ts2)
+			lfs = append(lfs, bayes.LabeledFeatures{
+				Features: fs.Flatten(),
+				Label:    label,
+			})
 		}
 	}
 	return lfs
-}
-
-func features(bf []BayesF) []bayes.Featurer {
-	f := make([]bayes.Featurer, len(bf))
-	for i, v := range bf {
-		f[i] = v
-	}
-	return f
 }
 
 func loadText(path string) []rune {
