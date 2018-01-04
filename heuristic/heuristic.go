@@ -43,12 +43,16 @@ func exploreNameCandidate(ts []token.Token, d *dict.Dictionary,
 		return false
 	}
 
-	checkInfraspecies(ts, d, m)
+	if u.Decision == token.Binomial {
+		checkInfraspecies(ts, d, m)
+	}
+
 	return true
 }
 
 func checkAsSpecies(t *token.Token, d *dict.Dictionary) bool {
-	if t.SpeciesDict == dict.WhiteSpecies || t.SpeciesDict == dict.GreySpecies {
+	if !t.Capitalized &&
+		(t.SpeciesDict == dict.WhiteSpecies || t.SpeciesDict == dict.GreySpecies) {
 		return true
 	}
 	return false

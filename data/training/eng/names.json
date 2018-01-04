@@ -34402,5 +34402,557 @@
     "start": 0,
     "end": 18,
     "type": "binomial"
+  },
+  "Acacia aneura var. argentea": {
+    "text": "Acacia aneura var. argentea",
+    "start": 0,
+    "end": 27,
+    "type": "trinomial"
+  },
+  "Acacia aroma var. huarango": {
+    "text": "Acacia aroma var. huarango",
+    "start": 0,
+    "end": 26,
+    "type": "trinomial"
+  },
+  "Accipiter novaehollandiae ssp. obiensis": {
+    "text": "Accipiter novaehollandiae ssp. obiensis",
+    "start": 0,
+    "end": 39,
+    "type": "trinomial"
+  },
+  "Aegilops ovata var. erratica": {
+    "text": "Aegilops ovata var. erratica",
+    "start": 0,
+    "end": 28,
+    "type": "trinomial"
+  },
+  "Agropyron albicans var. albicans": {
+    "text": "Agropyron albicans var. albicans",
+    "start": 0,
+    "end": 32,
+    "type": "trinomial"
+  },
+  "Agropyron divergens var. inerme": {
+    "text": "Agropyron divergens var. inerme",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Amazilia viridigaster ssp. cupreicauda": {
+    "text": "Amazilia viridigaster ssp. cupreicauda",
+    "start": 0,
+    "end": 38,
+    "type": "trinomial"
+  },
+  "Amphora coffeaeaformis var. thumensis": {
+    "text": "Amphora coffeaeaformis var. thumensis",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Andropogon saccharoides var. inermis": {
+    "text": "Andropogon saccharoides var. inermis",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Aphodius paracoenosus fm. paratristis": {
+    "text": "Aphodius paracoenosus fm. paratristis",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Argemone platyceras var. pleiacantha": {
+    "text": "Argemone platyceras var. pleiacantha",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Aster glaucodes ssp. pulcher": {
+    "text": "Aster glaucodes ssp. pulcher",
+    "start": 0,
+    "end": 28,
+    "type": "trinomial"
+  },
+  "Asterostigma lividum var. colubrinum": {
+    "text": "Asterostigma lividum var. colubrinum",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Athyrium wardii var. elongatum": {
+    "text": "Athyrium wardii var. elongatum",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
+  },
+  "Bennettiodendron macrophyllum var. macrophyllum": {
+    "text": "Bennettiodendron macrophyllum var. macrophyllum",
+    "start": 0,
+    "end": 47,
+    "type": "trinomial"
+  },
+  "Borreria ocymoides var. dussii": {
+    "text": "Borreria ocymoides var. dussii",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
+  },
+  "Brunellia inermis var. petiolulata": {
+    "text": "Brunellia inermis var. petiolulata",
+    "start": 0,
+    "end": 34,
+    "type": "trinomial"
+  },
+  "Bryopogon bicolor var. nigerrimus": {
+    "text": "Bryopogon bicolor var. nigerrimus",
+    "start": 0,
+    "end": 33,
+    "type": "trinomial"
+  },
+  "Calea urticifolia var. yucatanensis": {
+    "text": "Calea urticifolia var. yucatanensis",
+    "start": 0,
+    "end": 35,
+    "type": "trinomial"
+  },
+  "Carex gayana var. hyalina": {
+    "text": "Carex gayana var. hyalina",
+    "start": 0,
+    "end": 25,
+    "type": "trinomial"
+  },
+  "Carpesium divaricatum var. abrotanoides": {
+    "text": "Carpesium divaricatum var. abrotanoides",
+    "start": 0,
+    "end": 39,
+    "type": "trinomial"
+  },
+  "Chrysops aestuans var. abaestuans": {
+    "text": "Chrysops aestuans var. abaestuans",
+    "start": 0,
+    "end": 33,
+    "type": "trinomial"
+  },
+  "Citrus grandis var. glaberrima": {
+    "text": "Citrus grandis var. glaberrima",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
+  },
+  "Clavariadelphus pistillaris var. pistillaris": {
+    "text": "Clavariadelphus pistillaris var. pistillaris",
+    "start": 0,
+    "end": 44,
+    "type": "trinomial"
+  },
+  "Conus multiliratus ssp. walli": {
+    "text": "Conus multiliratus ssp. walli",
+    "start": 0,
+    "end": 29,
+    "type": "trinomial"
+  },
+  "Cosmarium cymatopleurum var. archerii": {
+    "text": "Cosmarium cymatopleurum var. archerii",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Cucurbita pepo ssp. texana": {
+    "text": "Cucurbita pepo ssp. texana",
+    "start": 0,
+    "end": 26,
+    "type": "trinomial"
+  },
+  "Cycnoches cooperi var. villenae": {
+    "text": "Cycnoches cooperi var. villenae",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Cypseloides niger ssp. costaricensis": {
+    "text": "Cypseloides niger ssp. costaricensis",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Diaporthe ceuthosporoides fm. ceuthosporoides": {
+    "text": "Diaporthe ceuthosporoides fm. ceuthosporoides",
+    "start": 0,
+    "end": 45,
+    "type": "trinomial"
+  },
+  "Diospyros virginiana ssp. virginiana": {
+    "text": "Diospyros virginiana ssp. virginiana",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Disa erubescens var. carsonii": {
+    "text": "Disa erubescens var. carsonii",
+    "start": 0,
+    "end": 29,
+    "type": "trinomial"
+  },
+  "Dismorphia medora ssp. juditha": {
+    "text": "Dismorphia medora ssp. juditha",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
+  },
+  "Doritis apollinus var. bellargus": {
+    "text": "Doritis apollinus var. bellargus",
+    "start": 0,
+    "end": 32,
+    "type": "trinomial"
+  },
+  "Dubautia plantaginea fm. occidentalis": {
+    "text": "Dubautia plantaginea fm. occidentalis",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Echinopsis pelecyrhachis var. lobivioides": {
+    "text": "Echinopsis pelecyrhachis var. lobivioides",
+    "start": 0,
+    "end": 41,
+    "type": "trinomial"
+  },
+  "Ephebe pubescens var. pubescens": {
+    "text": "Ephebe pubescens var. pubescens",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Festuca ovina var. dalmatica": {
+    "text": "Festuca ovina var. dalmatica",
+    "start": 0,
+    "end": 28,
+    "type": "trinomial"
+  },
+  "Ficus gibbosa var. cuneata": {
+    "text": "Ficus gibbosa var. cuneata",
+    "start": 0,
+    "end": 26,
+    "type": "trinomial"
+  },
+  "Flammula fusa ssp. filia": {
+    "text": "Flammula fusa ssp. filia",
+    "start": 0,
+    "end": 24,
+    "type": "trinomial"
+  },
+  "Galium angustifolium ssp. gracillimum": {
+    "text": "Galium angustifolium ssp. gracillimum",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Grevillea refracta var. velutina": {
+    "text": "Grevillea refracta var. velutina",
+    "start": 0,
+    "end": 32,
+    "type": "trinomial"
+  },
+  "Gyrophora cylindrica var. complicata": {
+    "text": "Gyrophora cylindrica var. complicata",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Hieracium glaucinum ssp. runcinatilobatum": {
+    "text": "Hieracium glaucinum ssp. runcinatilobatum",
+    "start": 0,
+    "end": 41,
+    "type": "trinomial"
+  },
+  "Hieracium schmidtii ssp. schmidtiiforme": {
+    "text": "Hieracium schmidtii ssp. schmidtiiforme",
+    "start": 0,
+    "end": 39,
+    "type": "trinomial"
+  },
+  "Ictalurus nebulosus ssp. marmoratus": {
+    "text": "Ictalurus nebulosus ssp. marmoratus",
+    "start": 0,
+    "end": 35,
+    "type": "trinomial"
+  },
+  "Ilex fargesii var. angustifolia": {
+    "text": "Ilex fargesii var. angustifolia",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Krainzia guelzowiana var. comocephala": {
+    "text": "Krainzia guelzowiana var. comocephala",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Lasianthus obliquinervis var. taitoensis": {
+    "text": "Lasianthus obliquinervis var. taitoensis",
+    "start": 0,
+    "end": 40,
+    "type": "trinomial"
+  },
+  "Leiphaimos brachyloba var. albida": {
+    "text": "Leiphaimos brachyloba var. albida",
+    "start": 0,
+    "end": 33,
+    "type": "trinomial"
+  },
+  "Leptopus esquirolii var. villosus": {
+    "text": "Leptopus esquirolii var. villosus",
+    "start": 0,
+    "end": 33,
+    "type": "trinomial"
+  },
+  "Leptosphaeria fusispora fm. fusispora": {
+    "text": "Leptosphaeria fusispora fm. fusispora",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Lippia globiflora fm. incana": {
+    "text": "Lippia globiflora fm. incana",
+    "start": 0,
+    "end": 28,
+    "type": "trinomial"
+  },
+  "Lobivia jajoiana var. caspalasensis": {
+    "text": "Lobivia jajoiana var. caspalasensis",
+    "start": 0,
+    "end": 35,
+    "type": "trinomial"
+  },
+  "Malus  cerasifera fm. koidzumii": {
+    "text": "Malus  cerasifera fm. koidzumii",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Mammillaria latimamma var. spinosior": {
+    "text": "Mammillaria latimamma var. spinosior",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Morchella conica var. meandriformis": {
+    "text": "Morchella conica var. meandriformis",
+    "start": 0,
+    "end": 35,
+    "type": "trinomial"
+  },
+  "Myrcia kegeliana var. pendula": {
+    "text": "Myrcia kegeliana var. pendula",
+    "start": 0,
+    "end": 29,
+    "type": "trinomial"
+  },
+  "Mythimna divergens ssp. divergens": {
+    "text": "Mythimna divergens ssp. divergens",
+    "start": 0,
+    "end": 33,
+    "type": "trinomial"
+  },
+  "Pachycarpus campanulatus var. sutherlandii": {
+    "text": "Pachycarpus campanulatus var. sutherlandii",
+    "start": 0,
+    "end": 42,
+    "type": "trinomial"
+  },
+  "Parmelia subconspersa var. varazzana": {
+    "text": "Parmelia subconspersa var. varazzana",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Perideridia bolanderi ssp. involucrata": {
+    "text": "Perideridia bolanderi ssp. involucrata",
+    "start": 0,
+    "end": 38,
+    "type": "trinomial"
+  },
+  "Philadelphus caucasicus var. glabratus": {
+    "text": "Philadelphus caucasicus var. glabratus",
+    "start": 0,
+    "end": 38,
+    "type": "trinomial"
+  },
+  "Plasmopara umbelliferarum var. umbelliferarum": {
+    "text": "Plasmopara umbelliferarum var. umbelliferarum",
+    "start": 0,
+    "end": 45,
+    "type": "trinomial"
+  },
+  "Platanthera bifolia ssp. extremiorientalis": {
+    "text": "Platanthera bifolia ssp. extremiorientalis",
+    "start": 0,
+    "end": 42,
+    "type": "trinomial"
+  },
+  "Poa glauca ssp. reverdattoi": {
+    "text": "Poa glauca ssp. reverdattoi",
+    "start": 0,
+    "end": 27,
+    "type": "trinomial"
+  },
+  "Polyporellus brumalis var. brumalis": {
+    "text": "Polyporellus brumalis var. brumalis",
+    "start": 0,
+    "end": 35,
+    "type": "trinomial"
+  },
+  "Potentilla canadensis fm. ochroleuca": {
+    "text": "Potentilla canadensis fm. ochroleuca",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Potentilla pamirica var. khunjrabensis": {
+    "text": "Potentilla pamirica var. khunjrabensis",
+    "start": 0,
+    "end": 38,
+    "type": "trinomial"
+  },
+  "Protea madiensis ssp. occidentalis": {
+    "text": "Protea madiensis ssp. occidentalis",
+    "start": 0,
+    "end": 34,
+    "type": "trinomial"
+  },
+  "Ramalina farinacea var. soralifera": {
+    "text": "Ramalina farinacea var. soralifera",
+    "start": 0,
+    "end": 34,
+    "type": "trinomial"
+  },
+  "Reseda phyteuma ssp. phyteuma": {
+    "text": "Reseda phyteuma ssp. phyteuma",
+    "start": 0,
+    "end": 29,
+    "type": "trinomial"
+  },
+  "Rhinanthus aristatus fm. simplex": {
+    "text": "Rhinanthus aristatus fm. simplex",
+    "start": 0,
+    "end": 32,
+    "type": "trinomial"
+  },
+  "Rosa  dumetorum var. gabrielis": {
+    "text": "Rosa  dumetorum var. gabrielis",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
+  },
+  "Salmonella enterica ssp. enterica": {
+    "text": "Salmonella enterica ssp. enterica",
+    "start": 0,
+    "end": 33,
+    "type": "trinomial"
+  },
+  "Saxifraga punctata var. porsildiana": {
+    "text": "Saxifraga punctata var. porsildiana",
+    "start": 0,
+    "end": 35,
+    "type": "trinomial"
+  },
+  "Schnella macrostachya var. brachystachya": {
+    "text": "Schnella macrostachya var. brachystachya",
+    "start": 0,
+    "end": 40,
+    "type": "trinomial"
+  },
+  "Serratula yamatsutana var. mongolica": {
+    "text": "Serratula yamatsutana var. mongolica",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Sphaerella vaccinii var. corymbosi": {
+    "text": "Sphaerella vaccinii var. corymbosi",
+    "start": 0,
+    "end": 34,
+    "type": "trinomial"
+  },
+  "Stevia hirsuta var. chortiana": {
+    "text": "Stevia hirsuta var. chortiana",
+    "start": 0,
+    "end": 29,
+    "type": "trinomial"
+  },
+  "Stipa sibirica var. effusa": {
+    "text": "Stipa sibirica var. effusa",
+    "start": 0,
+    "end": 26,
+    "type": "trinomial"
+  },
+  "Stropharia inuncta var. inuncta": {
+    "text": "Stropharia inuncta var. inuncta",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Symplocos pulchra ssp. villosa": {
+    "text": "Symplocos pulchra ssp. villosa",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
+  },
+  "Syngonanthus multicaulis var. glauca": {
+    "text": "Syngonanthus multicaulis var. glauca",
+    "start": 0,
+    "end": 36,
+    "type": "trinomial"
+  },
+  "Tapinella africana ssp. curvata": {
+    "text": "Tapinella africana ssp. curvata",
+    "start": 0,
+    "end": 31,
+    "type": "trinomial"
+  },
+  "Thlaspi huber-morathii ssp. divergens": {
+    "text": "Thlaspi huber-morathii ssp. divergens",
+    "start": 0,
+    "end": 37,
+    "type": "trinomial"
+  },
+  "Thymus richardii ssp. nitidus": {
+    "text": "Thymus richardii ssp. nitidus",
+    "start": 0,
+    "end": 29,
+    "type": "trinomial"
+  },
+  "Trametes lutescens fm. lutescens": {
+    "text": "Trametes lutescens fm. lutescens",
+    "start": 0,
+    "end": 32,
+    "type": "trinomial"
+  },
+  "Trichothecium roseum var. roseum": {
+    "text": "Trichothecium roseum var. roseum",
+    "start": 0,
+    "end": 32,
+    "type": "trinomial"
+  },
+  "Weigela florida var. venusta": {
+    "text": "Weigela florida var. venusta",
+    "start": 0,
+    "end": 28,
+    "type": "trinomial"
+  },
+  "Wentiomyces lichenicola ssp. bouteillei": {
+    "text": "Wentiomyces lichenicola ssp. bouteillei",
+    "start": 0,
+    "end": 39,
+    "type": "trinomial"
+  },
+  "Zoila vercoi fm. plurifasciata": {
+    "text": "Zoila vercoi fm. plurifasciata",
+    "start": 0,
+    "end": 30,
+    "type": "trinomial"
   }
 }

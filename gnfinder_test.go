@@ -8,7 +8,7 @@ import (
 
 var _ = Describe("Gnfinder", func() {
 	Describe("FindNames", func() {
-		FIt("finds names", func() {
+		It("finds names", func() {
 			s := "Plantago major and Pardosa moesta are spiders and plants"
 			output := FindNames([]rune(s), dictionary)
 			Expect(output.Names[0].Name).To(Equal("Plantago major"))
@@ -27,6 +27,18 @@ var _ = Describe("Gnfinder", func() {
 			Expect(len(output.Names)).To(Equal(1))
 		})
 
+		FIt("does not find capitalized infraspecies", func() {
+			s := "the periwinkles Littorina and Tectarius and other shore species"
+			output := FindNames([]rune(s), dictionary)
+			Expect(len(output.Names)).To(Equal(2))
+			Expect(output.Names[0].Name).To(Equal("Littorina"))
+			Expect(output.Names[1].Name).To(Equal("Tectarius"))
+			s = "8 Living Flamingo Tongues on the Rough Sea-whip, Miiricea muricata Pallas'"
+			output = FindNames([]rune(s), dictionary)
+			Expect(len(output.Names)).To(Equal(1))
+			Expect(output.Names[0].Name).To(Equal("Miiricea muricata"))
+		})
+
 		It("recognizes subgenus", func() {
 			s := "Pomatomus (Pomatomus) saltator"
 			output := FindNames([]rune(s), dictionary)
@@ -36,7 +48,7 @@ var _ = Describe("Gnfinder", func() {
 
 		It("finds names in a book", func() {
 			output := FindNames([]rune(string(book)), dictionary)
-			Expect(len(output.Names)).To(Equal(4459))
+			Expect(len(output.Names)).To(Equal(4613))
 		})
 
 		// 	It("finds names in a book with new BayesOddsThreshold", func() {

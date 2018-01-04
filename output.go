@@ -6,7 +6,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/gnames/bayes"
 	"github.com/gnames/gnfinder/nlp"
 	"github.com/gnames/gnfinder/token"
 	"github.com/gnames/gnfinder/util"
@@ -51,7 +50,7 @@ type Name struct {
 	Verbatim    string            `json:"verbatim"`
 	Name        string            `json:"name"`
 	Odds        float64           `json:"odds,omitempty"`
-	OddsDetails bayes.Likelihoods `json:"odds_details,omitempty"`
+	OddsDetails token.OddsDetails `json:"odds_details,omitempty"`
 	OffsetStart int               `json:"start"`
 	OffsetEnd   int               `json:"end"`
 	Annotation  string            `json:"annotation"`
@@ -108,9 +107,9 @@ func uninomialName(u *token.Token, text []rune) Name {
 	if len(u.OddsDetails) == 0 {
 		return name
 	}
-	if l, ok := u.OddsDetails[nlp.Name]; ok {
-		name.OddsDetails = make(bayes.Likelihoods)
-		name.OddsDetails[nlp.Name] = l
+	if l, ok := u.OddsDetails[nlp.Name.String()]; ok {
+		name.OddsDetails = make(token.OddsDetails)
+		name.OddsDetails[nlp.Name.String()] = l
 	}
 	return name
 }
@@ -128,12 +127,12 @@ func speciesName(g *token.Token, s *token.Token, text []rune) Name {
 		len(g.LabelFreq) == 0 {
 		return name
 	}
-	if lg, ok := g.OddsDetails[nlp.Name]; ok {
-		name.OddsDetails = make(bayes.Likelihoods)
-		name.OddsDetails[nlp.Name] = lg
-		if ls, ok := s.OddsDetails[nlp.Name]; ok {
+	if lg, ok := g.OddsDetails[nlp.Name.String()]; ok {
+		name.OddsDetails = make(token.OddsDetails)
+		name.OddsDetails[nlp.Name.String()] = lg
+		if ls, ok := s.OddsDetails[nlp.Name.String()]; ok {
 			for k, v := range ls {
-				name.OddsDetails[nlp.Name][k] = v
+				name.OddsDetails[nlp.Name.String()][k] = v
 			}
 		}
 	}
@@ -162,17 +161,17 @@ func infraspeciesName(ts []token.Token, text []rune) Name {
 		len(isp.OddsDetails) == 0 || len(g.LabelFreq) == 0 {
 		return name
 	}
-	if lg, ok := g.OddsDetails[nlp.Name]; ok {
-		name.OddsDetails = make(bayes.Likelihoods)
-		name.OddsDetails[nlp.Name] = lg
-		if ls, ok := sp.OddsDetails[nlp.Name]; ok {
+	if lg, ok := g.OddsDetails[nlp.Name.String()]; ok {
+		name.OddsDetails = make(token.OddsDetails)
+		name.OddsDetails[nlp.Name.String()] = lg
+		if ls, ok := sp.OddsDetails[nlp.Name.String()]; ok {
 			for k, v := range ls {
-				name.OddsDetails[nlp.Name][k] = v
+				name.OddsDetails[nlp.Name.String()][k] = v
 			}
 		}
-		if li, ok := isp.OddsDetails[nlp.Name]; ok {
+		if li, ok := isp.OddsDetails[nlp.Name.String()]; ok {
 			for k, v := range li {
-				name.OddsDetails[nlp.Name][k] = v
+				name.OddsDetails[nlp.Name.String()][k] = v
 			}
 		}
 	}

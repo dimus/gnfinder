@@ -90,12 +90,23 @@ type Indices struct {
 	Infraspecies int
 }
 
+// OddsDetails are elements from which Odds are calculated
+type OddsDetails map[string]map[bayes.FeatureName]map[bayes.FeatureValue]float64
+
+func NewOddsDetails(l bayes.Likelihoods) OddsDetails {
+	res := make(OddsDetails)
+	for k, v := range l {
+		res[k.String()] = v
+	}
+	return res
+}
+
 // NLP collects data received from Bayes' algorithm
 type NLP struct {
 	// Odds are posterior odds.
 	Odds float64
 	// OddsDetails are elements from which Odds are calculated.
-	OddsDetails bayes.Likelihoods
+	OddsDetails
 	// LabelFreq is used to calculate prior odds of names appearing in a
 	// document
 	LabelFreq bayes.LabelFreq

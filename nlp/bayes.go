@@ -50,7 +50,8 @@ func decideInfraspeces(odds []bayes.Posterior, uni *token.Token,
 		return
 	}
 	isp.Odds = odds[2].MaxOdds
-	isp.OddsDetails = odds[2].Likelihoods
+	isp.OddsDetails = token.NewOddsDetails(odds[2].Likelihoods)
+
 	if isp.Odds >= oddsThreshold && uni.Odds > 1 &&
 		uni.Decision.In(token.NotName, token.PossibleBinomial) {
 		uni.Decision = token.BayesTrinomial
@@ -63,7 +64,7 @@ func decideSpeces(odds []bayes.Posterior, uni *token.Token, sp *token.Token,
 		return
 	}
 	sp.Odds = odds[1].MaxOdds
-	sp.OddsDetails = odds[1].Likelihoods
+	sp.OddsDetails = token.NewOddsDetails(odds[1].Likelihoods)
 	if sp.Odds >= oddsThreshold && uni.Odds > 1 &&
 		uni.Decision.In(token.NotName, token.PossibleBinomial) {
 		uni.Decision = token.BayesBinomial
@@ -77,7 +78,7 @@ func decideUninomial(odds []bayes.Posterior, uni *token.Token,
 	} else {
 		uni.Odds = 1 / odds[0].MaxOdds
 	}
-	uni.OddsDetails = odds[0].Likelihoods
+	uni.OddsDetails = token.NewOddsDetails(odds[0].Likelihoods)
 	uni.LabelFreq = odds[0].LabelFreq
 
 	if odds[0].MaxLabel == Name &&
@@ -102,8 +103,8 @@ func predictOdds(nb *bayes.NaiveBayes, t *token.Token, fs *FeatureSet,
 	if t.Indices.Infraspecies == 0 {
 		return []bayes.Posterior{oddsUni, oddsSp}
 	}
-
-	oddsInfraSp, err := nb.Predict(features(fs.InfraSp), bayes.WithPriorOdds(odds))
+	f := features(fs.InfraSp)
+	oddsInfraSp, err := nb.Predict(f, bayes.WithPriorOdds(odds))
 	util.Check(err)
 	return []bayes.Posterior{oddsUni, oddsSp, oddsInfraSp}
 }

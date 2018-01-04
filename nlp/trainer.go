@@ -74,12 +74,10 @@ func processNames(ns *TrainingNames,
 				ts2 := ts[i:util.UpperIndex(i, l)]
 				token.SetIndices(ts2, d)
 				fs := BayesFeatures(ts2)
-				lfs = []bayes.LabeledFeatures{
-					{
-						Features: fs.Flatten(),
-						Label:    label,
-					},
-				}
+				lfs = append(lfs, bayes.LabeledFeatures{
+					Features: fs.Flatten(),
+					Label:    label,
+				})
 			}
 		}
 	}
