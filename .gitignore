@@ -3,5 +3,6 @@ cmd/gnfinder/**
 cmd/training/**
 t
 t.json
+*.test
 *test
 .idea
