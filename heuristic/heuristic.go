@@ -43,7 +43,8 @@ func exploreNameCandidate(ts []token.Token, d *dict.Dictionary,
 		return false
 	}
 
-	if u.Decision == token.Binomial {
+	if u.Decision.In(token.Binomial, token.PossibleBinomial,
+		token.BayesBinomial) {
 		checkInfraspecies(ts, d, m)
 	}
 

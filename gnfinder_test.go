@@ -27,13 +27,14 @@ var _ = Describe("Gnfinder", func() {
 			Expect(len(output.Names)).To(Equal(1))
 		})
 
-		FIt("does not find capitalized infraspecies", func() {
+		It("does not find capitalized infraspecies", func() {
 			s := "the periwinkles Littorina and Tectarius and other shore species"
 			output := FindNames([]rune(s), dictionary)
 			Expect(len(output.Names)).To(Equal(2))
 			Expect(output.Names[0].Name).To(Equal("Littorina"))
 			Expect(output.Names[1].Name).To(Equal("Tectarius"))
-			s = "8 Living Flamingo Tongues on the Rough Sea-whip, Miiricea muricata Pallas'"
+			s = `8 Living Flamingo Tongues on the Rough 
+			Sea-whip, Miiricea muricata Alba`
 			output = FindNames([]rune(s), dictionary)
 			Expect(len(output.Names)).To(Equal(1))
 			Expect(output.Names[0].Name).To(Equal("Miiricea muricata"))
@@ -44,6 +45,13 @@ var _ = Describe("Gnfinder", func() {
 			output := FindNames([]rune(s), dictionary)
 			Expect(len(output.Names)).To(Equal(2))
 			Expect(output.Names[1].Name).To(Equal("Pomatomus"))
+		})
+
+		FIt("recognizes infraspecies with rank", func() {
+			s := "This is a P. calycina var. mathewsii. and it is a legume"
+			output := FindNames([]rune(s), dictionary)
+			Expect(len(output.Names)).To(Equal(1))
+			Expect(output.Names[0].Name).To(Equal("Pomatomus"))
 		})
 
 		It("finds names in a book", func() {
