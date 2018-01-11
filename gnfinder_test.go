@@ -47,11 +47,11 @@ var _ = Describe("Gnfinder", func() {
 			Expect(output.Names[1].Name).To(Equal("Pomatomus"))
 		})
 
-		FIt("recognizes infraspecies with rank", func() {
+		It("recognizes infraspecies with rank", func() {
 			s := "This is a P. calycina var. mathewsii. and it is a legume"
 			output := FindNames([]rune(s), dictionary)
 			Expect(len(output.Names)).To(Equal(1))
-			Expect(output.Names[0].Name).To(Equal("Pomatomus"))
+			Expect(output.Names[0].Name).To(Equal("P. calycina var. mathewsii"))
 		})
 
 		It("finds names in a book", func() {
